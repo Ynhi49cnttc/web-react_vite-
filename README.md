@@ -1,73 +1,37 @@
-# React + TypeScript + Vite
+# 📅 Event Manager (Quản lý sự kiện)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Một ứng dụng web quản lý sự kiện và công việc cá nhân đơn giản, trực quan, được xây dựng bằng **React**, **TypeScript** và công cụ build **Vite**. 
 
-Currently, two official plugins are available:
+Dự án này được phát triển với mục tiêu nắm vững các khái niệm cốt lõi của React như quản lý State (`useState`), Side Effects (`useEffect`), xử lý mảng (Array methods) và thiết kế giao diện Responsive.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Tính năng nổi bật
 
-## React Compiler
+- **CRUD cơ bản:** Thêm mới, chỉnh sửa và xoá sự kiện dễ dàng.
+- **Phân loại thông minh (Categories):** Gắn thẻ sự kiện (Học tập, Làm việc, Cá nhân, Khác) với các badge màu sắc trực quan.
+- **Trạng thái công việc:** Đánh dấu hoàn thành sự kiện với thao tác gạch ngang chữ tinh tế.
+- **Tìm kiếm (Search):** Lọc và tìm kiếm sự kiện theo tên theo thời gian thực (Real-time).
+- **Lưu trữ dữ liệu (LocalStorage):** Tự động lưu dữ liệu vào trình duyệt, không bị mất khi tải lại trang.
+- **Giao diện Responsive:** Hiển thị hoàn hảo trên mọi thiết bị. Tự động chuyển đổi thành dạng Dashboard 2 cột chuyên nghiệp khi xem trên Laptop/Desktop bằng CSS Grid.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Công nghệ sử dụng
 
-## Expanding the ESLint configuration
+- **Core:** React 18
+- **Ngôn ngữ:** TypeScript (đảm bảo tính chặt chẽ của dữ liệu)
+- **Build Tool:** Vite (khởi động và biên dịch siêu tốc)
+- **Styling:** CSS3 thuần (áp dụng Flexbox & CSS Grid)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Hướng dẫn cài đặt và chạy dự án
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Làm theo các bước sau để chạy ứng dụng trên máy tính của bạn:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **Clone hoặc tải dự án về máy**
+   ```bash
+   git clone <link-github-cua-ban-neu-co>
+   cd event-manager
+2. **Cài đặt các thư viện cần thiết**
+   ```bash
+   npm install
+3. **Khởi chạy môi trường phát triển**
+   ```bash
+   npm run dev
+Mở trình duyệt và truy cập vào đường dẫn: http://localhost:5173/
