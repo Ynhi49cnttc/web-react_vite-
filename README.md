@@ -19,8 +19,8 @@ Dự án này được phát triển với mục tiêu nắm vững các khái n
 
 ## 🛠 Công nghệ sử dụng
 - **Core:** React 18
-- **Ngôn ngữ:** TypeScript (đảm bảo tính chặt chẽ của dữ liệu)
-- **Build Tool:** Vite (khởi động và biên dịch siêu tốc)
+- **Ngôn ngữ:** TypeScript
+- **Build Tool:** Vite 
 - **Styling:** Tailwind CSS
 
 ## 🚀 Hướng dẫn cài đặt và chạy dự án
@@ -29,8 +29,7 @@ Làm theo các bước sau để chạy ứng dụng trên máy tính của bạ
 
 1. **Clone hoặc tải dự án về máy**
    ```bash
-   git clone <link-github-cua-ban-neu-co>
-   cd event-manager
+   git clone <link-github>
 2. **Cài đặt các thư viện cần thiết**
    ```bash
    npm install
