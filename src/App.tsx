@@ -1,75 +1,137 @@
-import { useState, useEffect } from "react";
-import type { Event } from "./types/event";
+import { useState, useEffect, useMemo } from "react";
+import type { Event, GroupBy, SortBy, Category } from "./types/event";
 import EventForm from "./components/EventForm";
 import EventList from "./components/EventList";
-import "./App.css";
+import StatsBar from "./components/StatsBar";
+import Toolbar from "./components/Toolbar";
 
 function App() {
-  // 1. Khởi tạo State
   const [events, setEvents] = useState<Event[]>(() => {
-    const saved = localStorage.getItem("events");
+    const saved = localStorage.getItem("events_v2");
     return saved ? JSON.parse(saved) : [];
   });
-  
   const [searchTerm, setSearchTerm] = useState("");
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [groupBy, setGroupBy] = useState<GroupBy>("day");
+  const [sortBy, setSortBy] = useState<SortBy>("date-asc");
+  const [filterCategory, setFilterCategory] = useState<Category | "Tất cả">("Tất cả");
+  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "completed">("all");
 
-  // 2. Lưu vào LocalStorage
   useEffect(() => {
-    localStorage.setItem("events", JSON.stringify(events));
+    localStorage.setItem("events_v2", JSON.stringify(events));
   }, [events]);
 
-  // 3. Các hàm xử lý logic
   const saveEvent = (event: Event) => {
     if (editingEvent) {
-      setEvents(events.map(e => e.id === event.id ? event : e));
+      setEvents(prev => prev.map(e => e.id === event.id ? event : e));
       setEditingEvent(null);
     } else {
-      setEvents([...events, event]);
+      setEvents(prev => [...prev, event]);
     }
+    setShowForm(false);
   };
 
   const deleteEvent = (id: number) => {
-    setEvents(events.filter(e => e.id !== id));
+    setEvents(prev => prev.filter(e => e.id !== id));
     if (editingEvent?.id === id) setEditingEvent(null);
   };
 
   const toggleComplete = (id: number) => {
-    setEvents(events.map(e => e.id === id ? { ...e, completed: !e.completed } : e));
+    setEvents(prev => prev.map(e => e.id === id ? { ...e, completed: !e.completed } : e));
   };
 
-  // 4. Derived State: Lọc sự kiện theo thanh tìm kiếm
-  const displayedEvents = events.filter(e => 
-    e.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const startEdit = (event: Event) => {
+    setEditingEvent(event);
+    setShowForm(true);
+  };
+
+  const cancelEdit = () => {
+    setEditingEvent(null);
+    setShowForm(false);
+  };
+
+  const filteredEvents = useMemo(() => {
+    return events.filter(e => {
+      const matchSearch = e.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (e.description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
+      const matchCategory = filterCategory === "Tất cả" || e.category === filterCategory;
+      const matchStatus = filterStatus === "all" ||
+        (filterStatus === "completed" ? e.completed : !e.completed);
+      return matchSearch && matchCategory && matchStatus;
+    });
+  }, [events, searchTerm, filterCategory, filterStatus]);
 
   return (
-    <div className="app-container">
-      {/* KHU VỰC HEADER VÀ TÌM KIẾM */}
-      <div className="header-section">
-        <h1>Event Manager</h1>
-        <input 
-          type="text" 
-          className="search-input"
-          placeholder="Tìm kiếm sự kiện..." 
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white">
+      {/* Decorative background orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-violet-600/20 blur-3xl" />
+        <div className="absolute bottom-[-15%] right-[-5%] w-[600px] h-[600px] rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute top-[40%] left-[50%] w-[300px] h-[300px] rounded-full bg-pink-500/10 blur-3xl" />
       </div>
 
-      <EventForm 
-        onSave={saveEvent} 
-        editingEvent={editingEvent} 
-        cancelEdit={() => setEditingEvent(null)}
-      />
-      
-      {/* Lưu ý: Truyền displayedEvents thay vì events để danh sách hiển thị đúng kết quả tìm kiếm */}
-      <EventList 
-        events={displayedEvents} 
-        deleteEvent={deleteEvent} 
-        toggleComplete={toggleComplete}
-        setEditingEvent={setEditingEvent} 
-      />
+      <div className="relative z-10 max-w-5xl mx-auto px-4 py-8">
+        {/* Header */}
+        <header className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-4xl font-black tracking-tight bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                Event Manager
+              </h1>
+              <p className="text-slate-400 text-sm mt-1">Quản lý sự kiện thông minh</p>
+            </div>
+            <button
+              onClick={() => { setEditingEvent(null); setShowForm(true); }}
+              className="flex items-center gap-2 bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-500 hover:to-pink-500 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-violet-900/40 hover:scale-105 active:scale-95"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+              </svg>
+              Thêm sự kiện
+            </button>
+          </div>
+
+          <StatsBar events={events} />
+        </header>
+
+        {/* Form Modal */}
+        {showForm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div className="w-full max-w-lg">
+              <EventForm
+                onSave={saveEvent}
+                editingEvent={editingEvent}
+                cancelEdit={cancelEdit}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Toolbar: search + filter + sort + group */}
+        <Toolbar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          groupBy={groupBy}
+          setGroupBy={setGroupBy}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          filterCategory={filterCategory}
+          setFilterCategory={setFilterCategory}
+          filterStatus={filterStatus}
+          setFilterStatus={setFilterStatus}
+        />
+
+        {/* Event List */}
+        <EventList
+          events={filteredEvents}
+          groupBy={groupBy}
+          sortBy={sortBy}
+          deleteEvent={deleteEvent}
+          toggleComplete={toggleComplete}
+          setEditingEvent={startEdit}
+        />
+      </div>
     </div>
   );
 }
