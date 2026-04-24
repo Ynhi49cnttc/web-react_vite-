@@ -10,15 +10,18 @@ Dự án này được phát triển với mục tiêu nắm vững các khái n
 - **Phân loại thông minh (Categories):** Gắn thẻ sự kiện (Học tập, Làm việc, Cá nhân, Khác) với các badge màu sắc trực quan.
 - **Trạng thái công việc:** Đánh dấu hoàn thành sự kiện với thao tác gạch ngang chữ tinh tế.
 - **Tìm kiếm (Search):** Lọc và tìm kiếm sự kiện theo tên theo thời gian thực (Real-time).
-- **Lưu trữ dữ liệu (LocalStorage):** Tự động lưu dữ liệu vào trình duyệt, không bị mất khi tải lại trang.
+- **Tailwind CSS:**
++ Giao diện dashboard colorful, hiện đại
++ Filter theo danh mục + sắp xếp (theo ngày, tên, trạng thái)
+- **Phân nhóm:** ngày/tuần/tháng
+- **Deadline highlight:** sự kiện sắp đến / quá hạn được đánh dấu nổi bật.
 - **Giao diện Responsive:** Hiển thị hoàn hảo trên mọi thiết bị. Tự động chuyển đổi thành dạng Dashboard 2 cột chuyên nghiệp khi xem trên Laptop/Desktop bằng CSS Grid.
 
 ## 🛠 Công nghệ sử dụng
-
 - **Core:** React 18
 - **Ngôn ngữ:** TypeScript (đảm bảo tính chặt chẽ của dữ liệu)
 - **Build Tool:** Vite (khởi động và biên dịch siêu tốc)
-- **Styling:** CSS3 thuần (áp dụng Flexbox & CSS Grid)
+- **Styling:** Tailwind CSS
 
 ## 🚀 Hướng dẫn cài đặt và chạy dự án
 
