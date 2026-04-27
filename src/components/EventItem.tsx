@@ -85,7 +85,7 @@ export default function EventItem({ event, deleteEvent, toggleComplete, setEditi
             </div>
 
             {/* Action buttons (visible on hover) */}
-            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+            <div className="flex gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-shrink-0">
               <button
                 onClick={() => setEditingEvent(event)}
                 className="p-1.5 rounded-lg text-slate-500 hover:text-violet-400 hover:bg-violet-500/10 transition-all"

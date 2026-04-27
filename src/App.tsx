@@ -71,12 +71,12 @@ function App() {
         <div className="absolute top-[40%] left-[50%] w-[300px] h-[300px] rounded-full bg-pink-500/10 blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
         {/* Header */}
         <header className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-4xl font-black tracking-tight bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
                 Event Manager
               </h1>
               <p className="text-slate-400 text-sm mt-1">Quản lý sự kiện thông minh</p>

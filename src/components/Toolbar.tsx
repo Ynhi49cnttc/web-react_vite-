@@ -54,9 +54,9 @@ export default function Toolbar({
       </div>
 
       {/* Row 2: Category filter + Status + Sort + Group */}
-      <div className="flex flex-wrap gap-2 items-center justify-between">
+      <div className="flex flex-col xl:flex-row gap-3 items-start xl:items-center justify-between">
         {/* Category chips */}
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 w-full xl:w-auto">
           {CATEGORIES.map(cat => (
             <button
               key={cat}
@@ -73,9 +73,9 @@ export default function Toolbar({
         </div>
 
         {/* Controls group */}
-        <div className="flex gap-2 items-center flex-wrap">
+        <div className="flex flex-col sm:flex-row gap-2 w-full xl:w-auto items-stretch sm:items-center">
           {/* Status filter */}
-          <div className="flex bg-slate-800/60 rounded-lg border border-slate-700/60 p-0.5 text-xs">
+          <div className="flex bg-slate-800/60 rounded-lg border border-slate-700/60 p-0.5 text-xs flex-1 sm:flex-none justify-center">
             {(["all", "active", "completed"] as const).map(s => (
               <button
                 key={s}
@@ -95,7 +95,7 @@ export default function Toolbar({
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value as SortBy)}
-            className="bg-slate-800/60 border border-slate-700/60 text-slate-300 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-violet-500/60 transition-all cursor-pointer"
+            className="bg-slate-800/60 border border-slate-700/60 text-slate-300 text-xs rounded-lg px-3 py-2 sm:py-1.5 focus:outline-none focus:border-violet-500/60 transition-all cursor-pointer flex-1 sm:flex-none"
           >
             <option value="date-asc">📅 Ngày ↑</option>
             <option value="date-desc">📅 Ngày ↓</option>
@@ -105,7 +105,7 @@ export default function Toolbar({
           </select>
 
           {/* Group by */}
-          <div className="flex bg-slate-800/60 rounded-lg border border-slate-700/60 p-0.5 text-xs">
+          <div className="flex bg-slate-800/60 rounded-lg border border-slate-700/60 p-0.5 text-xs flex-1 sm:flex-none justify-center">
             {(["day", "week", "month"] as const).map(g => (
               <button
                 key={g}
